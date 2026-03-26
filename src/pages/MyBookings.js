@@ -71,8 +71,8 @@ function MyBookings() {
     fetchBookings();
   }, []);
 
-  const filters = ['All', 'Confirmed', 'Pending', 'Completed', 'Cancelled'];
-  const filtered = filter === 'All' ? bookings : bookings.filter(b => b.status === filter);
+  const filters = ['All', 'pending', 'confirmed', 'cancelled'];
+  const filtered = filter === 'All' ? bookings : bookings.filter(b => b.status?.toLowerCase() === filter.toLowerCase());
 
   const handleCancel = async (id) => {
     try {
@@ -107,9 +107,9 @@ function MyBookings() {
 
   const stats = [
     { label: 'Total Bookings', value: bookings.length, icon: '📋' },
-    { label: 'Upcoming Trips', value: bookings.filter(b => b.status === 'Confirmed' || b.status === 'Pending').length, icon: '✈️' },
-    { label: 'Completed Trips', value: bookings.filter(b => b.status === 'Completed').length, icon: '🏆' },
-    { label: 'Total Spent', value: '₹' + bookings.filter(b => b.status !== 'Cancelled').reduce((sum, b) => sum + (b.total || 0), 0).toLocaleString(), icon: '💰' },
+    { label: 'Upcoming Trips', value: bookings.filter(b => b.status === 'confirmed' || b.status === 'pending').length, icon: '✈️' },
+    { label: 'Completed Trips', value: bookings.filter(b => b.status === 'confirmed').length, icon: '🏆' },
+    { label: 'Total Spent', value: '₹' + bookings.filter(b => b.status !== 'cancelled').reduce((sum, b) => sum + (b.total || 0), 0).toLocaleString(), icon: '💰' },
   ];
 
   return (
@@ -172,9 +172,9 @@ function MyBookings() {
         {!error && !loading && filtered.length > 0 && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {filtered.map(booking => {
-              const statusStyle = STATUS_STYLES[booking.status] || STATUS_STYLES['Pending'];
+              const statusStyle = STATUS_STYLES[booking.status] || STATUS_STYLES['pending'];
               const travelDate = new Date(booking.travelDate);
-              const isUpcoming = travelDate > new Date() && booking.status !== 'Cancelled';
+              const isUpcoming = travelDate > new Date() && booking.status !== 'cancelled';
               return (
                 <div key={booking.id} className="glass-panel" style={{ borderRadius: '20px', overflow: 'hidden', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', transition: 'transform 0.3s ease' }}
                   onMouseOver={e => e.currentTarget.style.transform = 'translateY(-4px)'}
@@ -204,7 +204,7 @@ function MyBookings() {
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(6px, 1.5vw, 8px)', width: '100%' }}>
                       <Link to={`/tours/${booking.tourId}`} className="btn-outline" style={{ padding: 'clamp(7px, 1.5vw, 9px) clamp(14px, 2.5vw, 16px)', fontSize: 'clamp(0.8rem, 1.5vw, 0.85rem)', textAlign: 'center' }}>View Tour</Link>
-                      {(booking.status === 'Confirmed' || booking.status === 'Pending') && (
+                      {(booking.status === 'confirmed' || booking.status === 'pending') && (
                         <button onClick={() => setCancelId(booking.id)} style={{ padding: 'clamp(7px, 1.5vw, 9px) clamp(14px, 2.5vw, 16px)', fontSize: 'clamp(0.8rem, 1.5vw, 0.85rem)', background: 'rgba(248,113,113,0.1)', border: '1px solid rgba(248,113,113,0.3)', borderRadius: '8px', color: '#f87171', cursor: 'pointer', fontFamily: 'Outfit,sans-serif', fontWeight: '600' }}>Cancel</button>
                       )}
                     </div>

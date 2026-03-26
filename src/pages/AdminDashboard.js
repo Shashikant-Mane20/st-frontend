@@ -253,7 +253,6 @@ function AdminDashboard() {
                           >
                             <option value="pending" style={{ background: '#1c2331', color: '#fbbf24' }}>Pending</option>
                             <option value="confirmed" style={{ background: '#1c2331', color: '#34d399' }}>Confirmed</option>
-                            <option value="completed" style={{ background: '#1c2331', color: '#34d399' }}>Completed</option>
                             <option value="cancelled" style={{ background: '#1c2331', color: '#f87171' }}>Cancelled</option>
                           </select>
                         </td>
