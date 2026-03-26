@@ -52,7 +52,7 @@ export const toursAPI = {
 export const bookingsAPI = {
   createBooking: (bookingData) => API.post('/bookings', bookingData),
   getUserBookings: () => API.get('/bookings/my-bookings'),
-  updateBooking: (id, bookingData) => API.put(`/bookings/${id}`, bookingData),
+  updateBooking: (id, bookingData) => API.put(`/bookings/${id}/status`, bookingData),
   cancelBooking: (id) => API.put(`/bookings/${id}/cancel`),
 };
 
