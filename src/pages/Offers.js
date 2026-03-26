@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { toursAPI } from '../utils/api';
 
 const TYPE_COLORS = {
   'Flash': { bg: 'rgba(239,68,68,0.15)', color: '#f87171', border: 'rgba(239,68,68,0.3)' },
@@ -25,7 +25,7 @@ function Offers() {
 
   const fetchOffers = async () => {
     try {
-      const response = await axios.get('/api/tours');
+      const response = await toursAPI.getAllTours();
       const toursData = response.data.data ? response.data.data : response.data;
       
       // Filter tours with active discounts

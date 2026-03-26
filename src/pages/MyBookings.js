@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { getToken, isAuthenticated, clearDemoData } from '../utils/auth';
+import { bookingsAPI } from '../utils/api';
+import { isAuthenticated, clearDemoData } from '../utils/auth';
 
 const STATUS_STYLES = {
   'confirmed': { bg: 'rgba(52,211,153,0.15)', color: '#34d399', border: 'rgba(52,211,153,0.3)' },
@@ -36,7 +36,7 @@ function MyBookings() {
       try {
         const token = getToken();
         const config = { headers: { Authorization: `Bearer ${token}` } };
-        const response = await axios.get('/api/bookings/my-bookings', config);
+        const response = await bookingsAPI.getUserBookings();
         
         if (response.data.data && response.data.data.length > 0) {
           // Convert API response to format expected by UI
@@ -76,7 +76,7 @@ function MyBookings() {
     try {
       const token = getToken();
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      await axios.put(`/api/bookings/${id}/cancel`, {}, config);
+      await bookingsAPI.cancelBooking(id);
       // Refresh bookings after cancel
       const response = await axios.get('/api/bookings/my-bookings', config);
       if (response.data.data && response.data.data.length > 0) {

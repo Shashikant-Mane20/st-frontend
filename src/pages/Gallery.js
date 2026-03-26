@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { toursAPI } from '../utils/api';
 
 const CATS = ['All', 'Hill Station', 'Beach', 'Heritage', 'Wildlife', 'Pilgrimage'];
 const EMOJI_MAP = { 'Hill Station': '🏔️', 'Beach': '🏖️', 'Heritage': '🏛️', 'Wildlife': '🦁', 'Pilgrimage': '🙏' };
@@ -17,7 +17,7 @@ function Gallery() {
 
   const fetchGalleryItems = async () => {
     try {
-      const response = await axios.get('/api/tours');
+      const response = await toursAPI.getAllTours();
       const toursData = response.data.data ? response.data.data : response.data;
       
       // Convert tour images into gallery items

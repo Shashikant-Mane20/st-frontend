@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { authAPI } from '../utils/api';
 import { Link, useNavigate } from 'react-router-dom';
 import { setToken, setUser } from '../utils/auth';
 
@@ -28,7 +28,7 @@ function Login() {
 
     setLoading(true);
     try {
-      const res = await axios.post('/api/auth/login', form);
+      const res = await authAPI.login(form.email, form.password);
       // Save JWT token and user data to localStorage
       setToken(res.data.token);
       setUser(res.data.user);

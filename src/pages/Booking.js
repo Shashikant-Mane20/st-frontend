@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { getToken, isAuthenticated } from '../utils/auth';
+import { toursAPI, bookingsAPI } from '../utils/api';
+import { isAuthenticated } from '../utils/auth';
 
 const inputStyle = { width: '100%', padding: 'clamp(10px, 2vw, 13px) clamp(12px, 2.5vw, 16px)', background: '#0d1117', border: '1px solid #30363d', borderRadius: '8px', color: '#e6edf3', fontFamily: 'Outfit,sans-serif', fontSize: 'clamp(0.9rem, 2vw, 0.97rem)', outline: 'none', transition: 'border-color 0.25s ease' };
 const labelStyle = { display: 'block', marginBottom: '7px', fontSize: 'clamp(0.75rem, 1.5vw, 0.88rem)', color: '#8b949e', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' };
@@ -23,7 +23,7 @@ function Booking() {
   useEffect(() => {
     const fetchTour = async () => {
       try {
-        const response = await axios.get(`/api/tours/${tourId}`);
+        const response = await toursAPI.getTourById(tourId);
         setTour(response.data.data || response.data);
       } catch (error) {
         setError('Tour not found. Please select a tour from our catalog.');
@@ -66,7 +66,7 @@ function Booking() {
       };
 
       // Submit booking to backend API
-      const response = await axios.post('/api/bookings', bookingData, config);
+      const response = await bookingsAPI.createBooking(bookingData);
       
       setBookingId(response.data.data?._id || 'BK' + Date.now());
       setSubmitted(true);

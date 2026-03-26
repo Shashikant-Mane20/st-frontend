@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { authAPI } from '../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
 
 function Register() {
@@ -33,7 +33,7 @@ function Register() {
     setLoading(true);
     try {
       // Connect to the backend route!
-      await axios.post('/api/auth/register', form);
+      await authAPI.register(form);
       setMessage('Registration successful!');
       setIsError(false);
       setTimeout(() => navigate('/'), 1500); // Redirect to home

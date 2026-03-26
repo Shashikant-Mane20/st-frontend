@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { toursAPI } from '../utils/api';
 
 const BADGE_COLORS = {
   'Most Popular': { bg: 'rgba(255,51,102,0.2)', color: '#ff6b8a', border: 'rgba(255,51,102,0.4)' },
@@ -31,7 +31,7 @@ function TourDetail() {
   useEffect(() => {
     const fetchTour = async () => {
       try {
-        const response = await axios.get(`/api/tours/${id}`);
+        const response = await toursAPI.getTourById(id);
         const tourData = response.data.data || response.data;
         setTour(tourData);
       } catch (err) {

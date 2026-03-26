@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { toursAPI } from '../utils/api';
 
 function Home() {
   const [tours, setTours] = useState([]);
@@ -9,7 +9,7 @@ function Home() {
     // Fetch tours from your backend connected to MongoDB!
     const fetchTours = async () => {
       try {
-        const response = await axios.get('/api/tours');
+        const response = await toursAPI.getAllTours();
         // Depending on your backend, tours might be in response.data or response.data.data
         setTours(response.data.data ? response.data.data : response.data);
       } catch (error) {
