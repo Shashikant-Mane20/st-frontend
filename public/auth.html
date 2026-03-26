@@ -1,0 +1,222 @@
+s<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tours & Travels - Login & Register</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Login Form -->
+            <div class="form-container login-form" id="loginForm">
+                <div class="form-header">
+                    <h1>Welcome Back</h1>
+                    <p>Sign in to your account</p>
+                </div>
+
+                <form>
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="login-email" 
+                            name="email" 
+                            placeholder="Enter your email" 
+                            required
+                        >
+                        <span class="error-message" id="login-email-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <div class="password-input-wrapper">
+                            <input 
+                                type="password" 
+                                id="login-password" 
+                                name="password" 
+                                placeholder="Enter your password" 
+                                required
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('login-password')">
+                                👁️
+                            </button>
+                        </div>
+                        <span class="error-message" id="login-password-error"></span>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" name="remember">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </form>
+
+                <div class="form-footer">
+                    <p>Don't have an account? 
+                        <a href="#" onclick="switchForm(event)">Sign up here</a>
+                    </p>
+                </div>
+
+                <div class="divider">OR</div>
+
+                <div class="social-login">
+                    <button class="social-btn google-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M23 12a11 11 0 0 1-10 10.9A11 11 0 0 1 1 12a11 11 0 0 1 22 0z"/>
+                        </svg>
+                        Google
+                    </button>
+                    <button class="social-btn facebook-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M18 2h-3a6 6 0 0 0-6 6v3H7v4h3v8h4v-8h3l1-4h-4V8a2 2 0 0 1 2-2h3z"/>
+                        </svg>
+                        Facebook
+                    </button>
+                </div>
+            </div>
+
+            <!-- Register Form -->
+            <div class="form-container register-form" id="registerForm" style="display: none;">
+                <div class="form-header">
+                    <h1>Create Account</h1>
+                    <p>Join us for amazing travel experiences</p>
+                </div>
+
+                <form>
+                    <div class="form-group">
+                        <label for="register-name">Full Name</label>
+                        <input 
+                            type="text" 
+                            id="register-name" 
+                            name="name" 
+                            placeholder="Enter your full name" 
+                            required
+                        >
+                        <span class="error-message" id="register-name-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="register-email">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="register-email" 
+                            name="email" 
+                            placeholder="Enter your email" 
+                            required
+                        >
+                        <span class="error-message" id="register-email-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="register-phone">Phone Number</label>
+                        <input 
+                            type="tel" 
+                            id="register-phone" 
+                            name="phone" 
+                            placeholder="Enter your phone number" 
+                            required
+                        >
+                        <span class="error-message" id="register-phone-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <div class="password-input-wrapper">
+                            <input 
+                                type="password" 
+                                id="register-password" 
+                                name="password" 
+                                placeholder="Create a password" 
+                                required
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('register-password')">
+                                👁️
+                            </button>
+                        </div>
+                        <span class="error-message" id="register-password-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="register-confirm-password">Confirm Password</label>
+                        <div class="password-input-wrapper">
+                            <input 
+                                type="password" 
+                                id="register-confirm-password" 
+                                name="confirmPassword" 
+                                placeholder="Confirm your password" 
+                                required
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('register-confirm-password')">
+                                👁️
+                            </button>
+                        </div>
+                        <span class="error-message" id="register-confirm-password-error"></span>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="terms-agreement">
+                            <input type="checkbox" name="terms" required>
+                            <span>I agree to the <a href="#">Terms & Conditions</a></span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+
+                <div class="form-footer">
+                    <p>Already have an account? 
+                        <a href="#" onclick="switchForm(event)">Sign in here</a>
+                    </p>
+                </div>
+
+                <div class="divider">OR</div>
+
+                <div class="social-login">
+                    <button class="social-btn google-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M23 12a11 11 0 0 1-10 10.9A11 11 0 0 1 1 12a11 11 0 0 1 22 0z"/>
+                        </svg>
+                        Google
+                    </button>
+                    <button class="social-btn facebook-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M18 2h-3a6 6 0 0 0-6 6v3H7v4h3v8h4v-8h3l1-4h-4V8a2 2 0 0 1 2-2h3z"/>
+                        </svg>
+                        Facebook
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decorative side panel -->
+        <div class="auth-side">
+            <div class="side-content">
+                <h2>Explore the World</h2>
+                <p>Discover amazing destinations and create unforgettable travel memories with us.</p>
+                <div class="side-features">
+                    <div class="feature">
+                        <span class="feature-icon">✈️</span>
+                        <p>Best Travel Deals</p>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">🌍</span>
+                        <p>World Destinations</p>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">⭐</span>
+                        <p>Premium Experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>

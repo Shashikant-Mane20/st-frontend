@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d1b69;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#5b2c8d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c0392b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="hill1" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#27ae60;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2ecc71;stop-opacity:0.8" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <!-- Sky glow -->
+  <ellipse cx="700" cy="100" rx="200" ry="120" fill="#f39c12" opacity="0.3"/>
+  <!-- Hills -->
+  <ellipse cx="100" cy="500" rx="300" ry="200" fill="url(#hill1)" opacity="0.9"/>
+  <ellipse cx="600" cy="480" rx="350" ry="180" fill="#1e8449" opacity="0.8"/>
+  <!-- Vineyard rows -->
+  <rect x="150" y="310" width="500" height="8" rx="4" fill="#27ae60" opacity="0.7"/>
+  <rect x="150" y="335" width="500" height="8" rx="4" fill="#27ae60" opacity="0.7"/>
+  <rect x="150" y="360" width="500" height="8" rx="4" fill="#27ae60" opacity="0.7"/>
+  <rect x="150" y="385" width="500" height="8" rx="4" fill="#27ae60" opacity="0.7"/>
+  <!-- Grapes -->
+  <circle cx="220" cy="300" r="10" fill="#8e44ad" opacity="0.9"/>
+  <circle cx="240" cy="308" r="9" fill="#9b59b6" opacity="0.9"/>
+  <circle cx="260" cy="300" r="10" fill="#8e44ad" opacity="0.9"/>
+  <circle cx="450" cy="300" r="10" fill="#8e44ad" opacity="0.9"/>
+  <circle cx="470" cy="308" r="9" fill="#9b59b6" opacity="0.9"/>
+  <circle cx="490" cy="300" r="10" fill="#8e44ad" opacity="0.9"/>
+  <!-- Stars -->
+  <circle cx="100" cy="80" r="2" fill="white" opacity="0.8"/>
+  <circle cx="200" cy="50" r="1.5" fill="white" opacity="0.7"/>
+  <circle cx="350" cy="70" r="2" fill="white" opacity="0.6"/>
+  <circle cx="500" cy="40" r="1.5" fill="white" opacity="0.8"/>
+  <!-- Labels -->
+  <text x="400" y="220" text-anchor="middle" font-family="Georgia, serif" font-size="36" fill="white" opacity="0.9" font-weight="bold">Nashik Vineyards</text>
+  <text x="400" y="260" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#f39c12" opacity="0.85">India's Wine Capital</text>
+</svg>

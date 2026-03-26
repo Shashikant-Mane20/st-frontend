@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d47a1;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#1976d2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#42a5f5;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="sea" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1565c0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0288d1;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="sand" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f9a825;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f57f17;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#sky)"/>
+  <!-- Sun -->
+  <circle cx="650" cy="100" r="55" fill="#ffeb3b" opacity="0.9"/>
+  <circle cx="650" cy="100" r="40" fill="#fff9c4" opacity="0.95"/>
+  <!-- Clouds -->
+  <ellipse cx="200" cy="100" rx="80" ry="30" fill="white" opacity="0.5"/>
+  <ellipse cx="150" cy="105" rx="50" ry="22" fill="white" opacity="0.4"/>
+  <ellipse cx="250" cy="108" rx="55" ry="22" fill="white" opacity="0.4"/>
+  <!-- Sea -->
+  <rect x="0" y="280" width="800" height="150" fill="url(#sea)"/>
+  <!-- Waves -->
+  <path d="M0,290 Q100,275 200,290 Q300,305 400,290 Q500,275 600,290 Q700,305 800,290" stroke="white" stroke-width="3" fill="none" opacity="0.5"/>
+  <path d="M0,315 Q100,300 200,315 Q300,330 400,315 Q500,300 600,315 Q700,330 800,315" stroke="white" stroke-width="2" fill="none" opacity="0.4"/>
+  <!-- Sand -->
+  <rect x="0" y="400" width="800" height="100" fill="url(#sand)"/>
+  <!-- Fort in sea -->
+  <rect x="340" y="230" width="120" height="70" fill="#5d4037"/>
+  <rect x="330" y="220" width="20" height="30" fill="#795548"/>
+  <rect x="450" y="220" width="20" height="30" fill="#795548"/>
+  <rect x="390" y="210" width="20" height="40" fill="#795548"/>
+  <!-- Flag -->
+  <line x1="400" y1="170" x2="400" y2="210" stroke="#bdbdbd" stroke-width="2"/>
+  <polygon points="400,170 420,180 400,190" fill="#f44336"/>
+  <!-- Palm trees -->
+  <line x1="100" y1="400" x2="100" y2="270" stroke="#5d4037" stroke-width="8"/>
+  <ellipse cx="80" cy="265" rx="40" ry="20" fill="#388e3c" transform="rotate(-20, 80, 265)"/>
+  <ellipse cx="120" cy="260" rx="45" ry="18" fill="#43a047" transform="rotate(15, 120, 260)"/>
+  <line x1="700" y1="400" x2="720" y2="260" stroke="#5d4037" stroke-width="8"/>
+  <ellipse cx="700" cy="255" rx="40" ry="18" fill="#388e3c" transform="rotate(-15, 700, 255)"/>
+  <ellipse cx="735" cy="250" rx="45" ry="18" fill="#43a047" transform="rotate(20, 735, 250)"/>
+  <!-- Boat -->
+  <path d="M470,310 Q490,300 510,310 L505,330 L475,330 Z" fill="#ff7043"/>
+  <line x1="490" y1="295" x2="490" y2="310" stroke="#bdbdbd" stroke-width="2"/>
+  <text x="400" y="480" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#fff9c4" opacity="0.95" font-weight="bold">Alibaug Coastal Paradise</text>
+</svg>
