@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
-import { getToken } from '../utils/auth';
+import { toursAPI, bookingsAPI } from '../utils/api';
 import './AdminDashboard.css';
 
 function AdminDashboard() {
@@ -27,39 +26,37 @@ function AdminDashboard() {
 
   const TOUR_CATEGORIES = ['Hill Station', 'Beach', 'Heritage', 'Wildlife', 'Pilgrimage'];
 
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
-
   const fetchData = useCallback(async () => {
     setLoading(true);
     setError('');
-    const token = getToken();
-    const config = { headers: { Authorization: `Bearer ${token}` } };
 
     try {
       if (activeTab === 'overview') {
         const [toursRes, bookingsRes] = await Promise.all([
-          axios.get(`${API_URL}/tours`),
-          axios.get(`${API_URL}/bookings`, config)
+          toursAPI.getAllTours(),
+          bookingsAPI.getUserBookings()
         ]);
+        const toursList = toursRes.data.data || toursRes.data || [];
+        const bookingsList = bookingsRes.data.data || bookingsRes.data || [];
         setStats({
-          tours: toursRes.data.count || (toursRes.data.data ? toursRes.data.data.length : toursRes.data.length),
-          bookings: bookingsRes.data.count || (bookingsRes.data.data ? bookingsRes.data.data.length : bookingsRes.data.length),
-          users: 0 // Fetch users count if needed
+          tours: toursList.length,
+          bookings: bookingsList.length,
+          users: 0
         });
       } else if (activeTab === 'tours') {
-        const res = await axios.get(`${API_URL}/tours`);
-        setTours(res.data.data || res.data);
+        const res = await toursAPI.getAllTours();
+        setTours(res.data.data || res.data || []);
       } else if (activeTab === 'bookings') {
-        const res = await axios.get(`${API_URL}/bookings`, config);
-        setBookings(res.data.data || res.data);
+        const res = await bookingsAPI.getUserBookings();
+        setBookings(res.data.data || res.data || []);
       }
     } catch (err) {
+      console.error('Failed to fetch data:', err.response?.data || err.message);
       setError('Failed to fetch data. Are you sure you are an admin?');
-      console.error(err);
     } finally {
       setLoading(false);
     }
-  }, [activeTab, API_URL]);
+  }, [activeTab]);
 
   useEffect(() => {
     fetchData();
@@ -103,11 +100,8 @@ function AdminDashboard() {
   const handleDeleteTour = async (id) => {
     if (!window.confirm('Are you sure you want to delete this tour?')) return;
     
-    const token = getToken();
-    const config = { headers: { Authorization: `Bearer ${token}` } };
-    
     try {
-      await axios.delete(`${API_URL}/tours/${id}`, config);
+      await toursAPI.deleteTour(id);
       fetchData();
     } catch (err) {
       alert('Failed to delete tour');
@@ -116,14 +110,12 @@ function AdminDashboard() {
 
   const handleSaveTour = async (e) => {
     e.preventDefault();
-    const token = getToken();
-    const config = { headers: { Authorization: `Bearer ${token}` } };
 
     try {
       if (editingTour) {
-        await axios.put(`${API_URL}/tours/${editingTour._id}`, formData, config);
+        await toursAPI.updateTour(editingTour._id, formData);
       } else {
-        await axios.post(`${API_URL}/tours`, formData, config);
+        await toursAPI.createTour(formData);
       }
       setIsModalOpen(false);
       setEditingTour(null);
@@ -131,6 +123,18 @@ function AdminDashboard() {
       fetchData();
     } catch (err) {
       alert('Failed to save tour: ' + (err.response?.data?.message || err.message));
+    }
+  };
+
+  const handleStatusChange = async (bookingId, newStatus) => {
+    try {
+      await bookingsAPI.updateBooking(bookingId, { status: newStatus });
+      // Refresh bookings
+      fetchData();
+      alert('Booking status updated successfully!');
+    } catch (err) {
+      console.error('Failed to update status:', err);
+      alert('Failed to update booking status');
     }
   };
 
@@ -232,7 +236,27 @@ function AdminDashboard() {
                         <td>{booking.tourId?.name || 'N/A'}</td>
                         <td>{booking.userId?.name || 'N/A'}</td>
                         <td>{booking.numberOfPeople}</td>
-                        <td><span className={`status-badge ${booking.status}`}>{booking.status}</span></td>
+                        <td>
+                          <select 
+                            value={booking.status} 
+                            onChange={(e) => handleStatusChange(booking._id, e.target.value)}
+                            style={{
+                              background: 'rgba(124,58,237,0.1)',
+                              border: '1px solid rgba(124,58,237,0.3)',
+                              borderRadius: '6px',
+                              padding: '6px 10px',
+                              color: booking.status === 'pending' ? '#fbbf24' : booking.status === 'confirmed' ? '#34d399' : '#f87171',
+                              fontWeight: '600',
+                              cursor: 'pointer',
+                              fontSize: '0.9rem'
+                            }}
+                          >
+                            <option value="pending" style={{ background: '#1c2331', color: '#fbbf24' }}>Pending</option>
+                            <option value="confirmed" style={{ background: '#1c2331', color: '#34d399' }}>Confirmed</option>
+                            <option value="completed" style={{ background: '#1c2331', color: '#34d399' }}>Completed</option>
+                            <option value="cancelled" style={{ background: '#1c2331', color: '#f87171' }}>Cancelled</option>
+                          </select>
+                        </td>
                         <td>
                           <button className="btn-icon">👁️</button>
                         </td>
