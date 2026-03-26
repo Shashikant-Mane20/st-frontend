@@ -34,8 +34,6 @@ function MyBookings() {
       }
 
       try {
-        const token = getToken();
-        const config = { headers: { Authorization: `Bearer ${token}` } };
         const response = await bookingsAPI.getUserBookings();
         
         if (response.data.data && response.data.data.length > 0) {
@@ -74,11 +72,9 @@ function MyBookings() {
 
   const handleCancel = async (id) => {
     try {
-      const token = getToken();
-      const config = { headers: { Authorization: `Bearer ${token}` } };
       await bookingsAPI.cancelBooking(id);
       // Refresh bookings after cancel
-      const response = await axios.get('/api/bookings/my-bookings', config);
+      const response = await bookingsAPI.getUserBookings();
       if (response.data.data && response.data.data.length > 0) {
         const apiBookings = response.data.data.map(b => ({
           id: b._id,

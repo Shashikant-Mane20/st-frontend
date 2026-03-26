@@ -54,9 +54,6 @@ function Booking() {
     setError('');
     
     try {
-      const token = getToken();
-      const config = { headers: { Authorization: `Bearer ${token}` } };
-
       // Prepare booking data
       const bookingData = {
         tourId: tour._id,
