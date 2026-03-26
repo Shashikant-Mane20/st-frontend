@@ -14,6 +14,20 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
+// Handle errors in responses
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Unauthorized - clear token and redirect to login
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Auth endpoints
 export const authAPI = {
   register: (userData) => API.post('/auth/register', userData),
@@ -37,9 +51,9 @@ export const toursAPI = {
 // Bookings endpoints
 export const bookingsAPI = {
   createBooking: (bookingData) => API.post('/bookings', bookingData),
-  getUserBookings: (userId) => API.get(`/bookings/${userId}`),
+  getUserBookings: () => API.get('/bookings/my-bookings'),
   updateBooking: (id, bookingData) => API.put(`/bookings/${id}`, bookingData),
-  cancelBooking: (id) => API.delete(`/bookings/${id}`),
+  cancelBooking: (id) => API.put(`/bookings/${id}/cancel`),
 };
 
 // Reviews endpoints

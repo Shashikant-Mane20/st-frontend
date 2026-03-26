@@ -35,10 +35,14 @@ function MyBookings() {
 
       try {
         const response = await bookingsAPI.getUserBookings();
+        console.log('Bookings response:', response.data); // Debug log
         
-        if (response.data.data && response.data.data.length > 0) {
+        // Handle both direct array and wrapped data
+        const bookingsList = response.data.data || response.data || [];
+        
+        if (Array.isArray(bookingsList) && bookingsList.length > 0) {
           // Convert API response to format expected by UI
-          const apiBookings = response.data.data.map(b => ({
+          const apiBookings = bookingsList.map(b => ({
             id: b._id,
             tourId: b.tourId?._id || b.tourId,
             tourTitle: b.tourId?.name || 'Unknown Tour',
@@ -57,7 +61,7 @@ function MyBookings() {
         }
         setLoading(false);
       } catch (err) {
-        console.error('Failed to fetch bookings:', err);
+        console.error('Failed to fetch bookings:', err.response?.data || err.message);
         setError('Failed to load bookings. Please try again.');
         setBookings([]);
         setLoading(false);
@@ -75,8 +79,9 @@ function MyBookings() {
       await bookingsAPI.cancelBooking(id);
       // Refresh bookings after cancel
       const response = await bookingsAPI.getUserBookings();
-      if (response.data.data && response.data.data.length > 0) {
-        const apiBookings = response.data.data.map(b => ({
+      const bookingsList = response.data.data || response.data || [];
+      if (Array.isArray(bookingsList) && bookingsList.length > 0) {
+        const apiBookings = bookingsList.map(b => ({
           id: b._id,
           tourId: b.tourId?._id || b.tourId,
           tourTitle: b.tourId?.name || 'Unknown Tour',
@@ -90,6 +95,8 @@ function MyBookings() {
           bookedOn: b.createdAt,
         }));
         setBookings(apiBookings);
+      } else {
+        setBookings([]);
       }
       setCancelId(null);
     } catch (err) {
