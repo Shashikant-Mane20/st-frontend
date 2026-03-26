@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toursAPI } from '../utils/api';
 
 function Home() {
+  const navigate = useNavigate();
   const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -39,7 +41,7 @@ function Home() {
           Experience breathtaking destinations, exclusive packages, and unforgettable memories tailored just for you.
         </p>
         <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
-          <button className="btn-primary" style={{ padding: '15px 30px', fontSize: '1.1rem' }}>Explore Tours</button>
+          <button className="btn-primary" onClick={() => navigate('/tours')} style={{ padding: '15px 30px', fontSize: '1.1rem' }}>Explore Tours</button>
           <button className="btn-outline" style={{ padding: '15px 30px', fontSize: '1.1rem' }}>Watch Video</button>
         </div>
       </section>
@@ -51,7 +53,7 @@ function Home() {
             <h2 style={{ fontSize: '2.5rem', fontWeight: '700', marginBottom: '10px' }}>Popular packages</h2>
             <p style={{ color: 'var(--text-secondary)' }}>Handpicked destinations for your next adventure</p>
           </div>
-          <button className="btn-outline">View All</button>
+          <button className="btn-outline" onClick={() => navigate('/tours')}>View All</button>
         </div>
 
         {loading ? (
@@ -100,7 +102,7 @@ function Home() {
                     <p style={{ color: 'var(--text-secondary)', marginBottom: '25px', display: '-webkit-box', WebkitLineClamp: '3', WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                       {tour.description || 'Experience the beauty of this amazing destination with our exclusive tour package designed just for you.'}
                     </p>
-                    <button className="btn-primary" style={{ width: '100%' }}>
+                    <button className="btn-primary" onClick={() => navigate(`/booking/${tour._id}`)} style={{ width: '100%' }}>
                       Book Now
                     </button>
                   </div>
