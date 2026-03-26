@@ -33,7 +33,7 @@ function Register() {
     setLoading(true);
     try {
       // Connect to the backend route!
-      const res = await axios.post('/api/auth/register', form);
+      await axios.post('/api/auth/register', form);
       setMessage('Registration successful!');
       setIsError(false);
       setTimeout(() => navigate('/'), 1500); // Redirect to home

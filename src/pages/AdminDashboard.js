@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { getToken } from '../utils/auth';
 import './AdminDashboard.css';
@@ -29,11 +29,7 @@ function AdminDashboard() {
 
   const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
-  useEffect(() => {
-    fetchData();
-  }, [activeTab]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     setError('');
     const token = getToken();
@@ -63,7 +59,11 @@ function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeTab, API_URL]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

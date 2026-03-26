@@ -16,7 +16,6 @@ function Offers() {
   const [filter, setFilter] = useState('All');
   const [copiedCode, setCopiedCode] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
   const TYPE_FILTERS = ['All', 'Flash', 'Seasonal', 'Couple', 'Group', 'Budget', 'Limited'];
 
@@ -52,7 +51,6 @@ function Offers() {
       setLoading(false);
     } catch (err) {
       console.error('Error fetching offers:', err);
-      setError('Failed to load offers');
       setOffers([]);
       setLoading(false);
     }

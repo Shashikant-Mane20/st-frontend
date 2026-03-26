@@ -68,22 +68,6 @@ function Booking() {
       // Submit booking to backend API
       const response = await axios.post('/api/bookings', bookingData, config);
       
-      // Also store fallback in localStorage for UI display
-      const bookings = JSON.parse(localStorage.getItem('shreeja_bookings') || '[]');
-      const newBooking = {
-        id: response.data.data?._id || 'BK' + Date.now(),
-        tourId: tour._id,
-        tourTitle: tour.name || tour.title,
-        tourImage: tour.image,
-        duration: tour.duration,
-        category: tour.category,
-        pricePerPerson: tour.price,
-        ...form,
-        total,
-        status: 'pending',
-        bookedOn: new Date().toISOString(),
-      };
-      
       setBookingId(response.data.data?._id || 'BK' + Date.now());
       setSubmitted(true);
     } catch (err) {
