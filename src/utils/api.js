@@ -45,6 +45,7 @@ export const toursAPI = {
   getTourById: (id) => API.get(`/tours/${id}`),
   createTour: (tourData) => API.post('/tours', tourData),
   updateTour: (id, tourData) => API.put(`/tours/${id}`, tourData),
+  completeTour: (id) => API.put(`/tours/${id}/complete`),
   deleteTour: (id) => API.delete(`/tours/${id}`),
 };
 
@@ -52,6 +53,7 @@ export const toursAPI = {
 export const bookingsAPI = {
   createBooking: (bookingData) => API.post('/bookings', bookingData),
   getUserBookings: () => API.get('/bookings/my-bookings'),
+  getAllBookings: () => API.get('/bookings'),
   updateBooking: (id, bookingData) => API.put(`/bookings/${id}/status`, bookingData),
   cancelBooking: (id) => API.put(`/bookings/${id}/cancel`),
 };

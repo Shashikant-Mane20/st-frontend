@@ -53,6 +53,7 @@ function MyBookings() {
             travelers: b.numberOfPeople,
             total: b.totalPrice,
             status: b.status.charAt(0).toUpperCase() + b.status.slice(1),
+            tourIsCompleted: b.tourId?.isCompleted || false,
             bookedOn: b.createdAt,
           }));
           setBookings(apiBookings);
@@ -92,6 +93,7 @@ function MyBookings() {
           travelers: b.numberOfPeople,
           total: b.totalPrice,
           status: b.status.charAt(0).toUpperCase() + b.status.slice(1),
+          tourIsCompleted: b.tourId?.isCompleted || false,
           bookedOn: b.createdAt,
         }));
         setBookings(apiBookings);
@@ -186,6 +188,9 @@ function MyBookings() {
                   <div style={{ padding: 'clamp(16px, 3vw, 24px) clamp(16px, 3vw, 28px)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(6px, 1.5vw, 10px)', marginBottom: '10px', flexWrap: 'wrap' }}>
                       <span style={{ background: statusStyle.bg, color: statusStyle.color, border: `1px solid ${statusStyle.border}`, borderRadius: '20px', padding: '3px 12px', fontSize: 'clamp(0.7rem, 1.5vw, 0.78rem)', fontWeight: '700' }}>{booking.status}</span>
+                      {booking.tourIsCompleted && (
+                        <span style={{ background: 'rgba(99,102,241,0.2)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.4)', borderRadius: '20px', padding: '3px 12px', fontSize: 'clamp(0.7rem, 1.5vw, 0.78rem)', fontWeight: '700' }}>✓ Tour Completed</span>
+                      )}
                       <span style={{ color: '#8b949e', fontSize: 'clamp(0.75rem, 1.5vw, 0.82rem)' }}>#{booking.id}</span>
                     </div>
                     <h3 style={{ fontSize: 'clamp(1rem, 2.5vw, 1.15rem)', fontWeight: '700', marginBottom: '8px' }}>{booking.tourTitle}</h3>

@@ -34,7 +34,7 @@ function AdminDashboard() {
       if (activeTab === 'overview') {
         const [toursRes, bookingsRes] = await Promise.all([
           toursAPI.getAllTours(),
-          bookingsAPI.getUserBookings()
+          bookingsAPI.getAllBookings()
         ]);
         const toursList = toursRes.data.data || toursRes.data || [];
         const bookingsList = bookingsRes.data.data || bookingsRes.data || [];
@@ -47,7 +47,7 @@ function AdminDashboard() {
         const res = await toursAPI.getAllTours();
         setTours(res.data.data || res.data || []);
       } else if (activeTab === 'bookings') {
-        const res = await bookingsAPI.getUserBookings();
+        const res = await bookingsAPI.getAllBookings();
         setBookings(res.data.data || res.data || []);
       }
     } catch (err) {
@@ -105,6 +105,18 @@ function AdminDashboard() {
       fetchData();
     } catch (err) {
       alert('Failed to delete tour');
+    }
+  };
+
+  const handleCompleteTour = async (id) => {
+    if (!window.confirm('Mark this tour as completed? It will be removed from user view.')) return;
+    
+    try {
+      await toursAPI.completeTour(id);
+      fetchData();
+      alert('Tour marked as completed successfully!');
+    } catch (err) {
+      alert('Failed to complete tour');
     }
   };
 
@@ -187,6 +199,7 @@ function AdminDashboard() {
                       <th>Category</th>
                       <th>Destination</th>
                       <th>Price</th>
+                      <th>Status</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -205,7 +218,22 @@ function AdminDashboard() {
                         <td>{tour.destination}</td>
                         <td>₹{tour.price}</td>
                         <td>
+                          <span style={{
+                            background: tour.isCompleted ? 'rgba(99,102,241,0.2)' : 'rgba(52,211,153,0.2)',
+                            color: tour.isCompleted ? '#a5b4fc' : '#34d399',
+                            padding: '4px 10px',
+                            borderRadius: '20px',
+                            fontSize: '0.85rem',
+                            fontWeight: '600'
+                          }}>
+                            {tour.isCompleted ? '✓ Completed' : 'Active'}
+                          </span>
+                        </td>
+                        <td>
                           <button className="btn-icon" onClick={() => handleEditTour(tour)}>✏️</button>
+                          {!tour.isCompleted && (
+                            <button className="btn-icon" onClick={() => handleCompleteTour(tour._id)} title="Mark as completed">✓</button>
+                          )}
                           <button className="btn-icon delete" onClick={() => handleDeleteTour(tour._id)}>🗑️</button>
                         </td>
                       </tr>
@@ -245,7 +273,7 @@ function AdminDashboard() {
                               border: '1px solid rgba(124,58,237,0.3)',
                               borderRadius: '6px',
                               padding: '6px 10px',
-                              color: booking.status === 'pending' ? '#fbbf24' : booking.status === 'confirmed' ? '#34d399' : '#f87171',
+                              color: booking.status === 'pending' ? '#fbbf24' : booking.status === 'confirmed' ? '#34d399' : booking.status === 'completed' ? '#a5b4fc' : '#f87171',
                               fontWeight: '600',
                               cursor: 'pointer',
                               fontSize: '0.9rem'
@@ -253,6 +281,7 @@ function AdminDashboard() {
                           >
                             <option value="pending" style={{ background: '#1c2331', color: '#fbbf24' }}>Pending</option>
                             <option value="confirmed" style={{ background: '#1c2331', color: '#34d399' }}>Confirmed</option>
+                            <option value="completed" style={{ background: '#1c2331', color: '#a5b4fc' }}>Completed</option>
                             <option value="cancelled" style={{ background: '#1c2331', color: '#f87171' }}>Cancelled</option>
                           </select>
                         </td>
